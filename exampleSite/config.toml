@@ -43,10 +43,8 @@ title = "Gallery"
     includeFields = "ImageDescription|Orientation"
 
 [module]
-  [module.hugoVersion]
-    min = "0.121.2"
   [[module.imports]]
-    path = "github.com/nicokaiser/hugo-theme-gallery/v4"
+    path = "github.com/mdfriday/theme-gallery"
 
 [menu]
   [[menu.footer]]
