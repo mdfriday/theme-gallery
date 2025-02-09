@@ -15,12 +15,10 @@
   {{ else }}
     <meta name="robots" content="index, follow" />
   {{ end }}
-  {{ range .AlternativeOutputFormats -}}
-    {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
-  {{ end -}}
+  {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .RelPermalink .MediaType.Type .Permalink $.Site.Title | safeHTML }}
   {{ partial "opengraph.html" . }}
   {{ $css := resources.Get "/css/main.scss" | toCSS | minify | fingerprint }}
-  <link rel="stylesheet" href="{{ $css.RelPermalink }}" />
+  <link rel="stylesheet" href="{{ $css.RelPermalink | absURL }}" />
   {{ $params := dict
     "closeTitle" (i18n "closeTitle")
     "zoomTitle" (i18n "zoomTitle")
@@ -33,6 +31,6 @@
     "targetRowHeightTolerance" (default 0.25 .Site.Params.gallery.targetRowHeightTolerance)
   }}
   {{ $js := resources.Get "js/main.js" | js.Build (dict "minify" true "params" $params) | resources.Fingerprint }}
-  <script src="{{ $js.RelPermalink }}" defer></script>
+  <script src="{{ $js.RelPermalink | absURL }}" defer></script>
   {{- partial "head-custom.html" . -}}
 </head>

@@ -1,13 +1,16 @@
-{{ range where site.Pages.ByDate.Reverse "Params.featured" "=" true | first 1 }}
+{{ range where .Site.Pages.ByDate.Reverse "Params.featured" "=" true | first 1 }}
   {{ $gallery := partial "get-gallery.html" . }}
   {{ if $gallery }}
     {{ $images := .Resources.ByType "image" }}
     {{ $index := 0 }}
+    {{ $cover := .Params.cover }}
+
     {{ range $i, $image := $images }}
-      {{ if index $image.Params "cover" }}
-        {{ $index = $i }}
-      {{ end }}
+        {{ if eq $image.Name (lower $cover) }}
+            {{ $index = $i }}
+        {{ end }}
     {{ end }}
+
     {{ $featured := ($images.GetMatch (.Params.featured_image | default "*feature*")) | default (index $images $index) }}
     {{ $thumbnail := $featured.Filter (slice images.AutoOrient (images.Process "fit 1600x1600")) }}
     {{ $color := index $thumbnail.Colors 0 | default "transparent" }}

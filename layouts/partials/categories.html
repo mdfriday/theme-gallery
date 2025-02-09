@@ -1,8 +1,8 @@
-{{ with site.Taxonomies.categories }}
+{{ with .Site.Taxonomies.categories }}
   <nav class="categories">
     <ul>
-      {{ range . }}
-        <li><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a></li>
+      {{ range $name, $taxonomy := . }}
+        <li><a href="{{ "/categories/" | relLangURL }}{{ $name | urlize }}">{{ $name }}</a></li>
       {{ end }}
     </ul>
   </nav>

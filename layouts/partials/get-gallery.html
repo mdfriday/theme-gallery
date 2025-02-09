@@ -2,11 +2,14 @@
 {{ $images := .Resources.ByType "image" }}
 {{ if gt (len $images) 0 }}
   {{ $index := 0 }}
+  {{ $cover := .Params.cover }}
+
   {{ range $i, $image := $images }}
-    {{ if index $image.Params "cover" }}
+    {{ if eq $image.Name (lower $cover) }}
       {{ $index = $i }}
     {{ end }}
   {{ end }}
+
   {{ $featured := ($images.GetMatch (.Params.featured_image | default "*feature*")) | default (index $images $index) }}
   {{ $thumbnail := $featured.Filter (slice images.AutoOrient (images.Process "fit 600x600")) }}
   {{ $color := index $thumbnail.Colors 0 | default "transparent" }}
@@ -23,6 +26,8 @@
   {{ $gallery = dict
     "page" $
     "images" $images
+    "idx" $index
+    "fea" $cover
     "thumbnail" $thumbnail
     "color" $color
     "albumCount" $albumCount

@@ -2,7 +2,7 @@
   {{ partial "title.html" . }}
   {{ partial "gallery.html" . }}
   {{ partial "related.html" . }}
-  {{ with .Content }}
+  {{ with .Params.content }}
     <section class="prose">
       {{ . }}
     </section>

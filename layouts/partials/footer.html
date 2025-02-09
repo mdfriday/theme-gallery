@@ -1,11 +1,14 @@
 <footer>
-  {{ partialCached "social-icons.html" . }}
+  {{ partial "social-icons.html" . }}
   <section>
-    {{ .Site.Copyright }}
+    © {{ now.Format "2006" }} {{ .Site.Title }}. All rights reserved.
     {{ range .Site.Menus.footer }}
       <a {{ with .Params.rel -}}rel="{{ . }}"{{ end -}} href="{{ .URL }}">
         {{ .Name }}
       </a>
     {{ end }}
+    <a rel="https://mdfriday.com" href="https://mdfriday.com">
+      Build with MDFriday
+    </a>
   </section>
 </footer>
